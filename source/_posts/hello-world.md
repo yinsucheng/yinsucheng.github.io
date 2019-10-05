@@ -11,6 +11,10 @@ Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [docume
 
 ### Create a new post
 
+```
+666666666666666666666666666666666666666666666666666666
+```
+
 ```bash
 $ hexo new "My New Post"
 ```
