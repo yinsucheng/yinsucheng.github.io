@@ -95,3 +95,11 @@ feed:
   order_by: -date
   icon: icon.png
   autodiscovery: true
+
+# count&&time
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: false
+  total_time: false
+  exclude_codeblock: false

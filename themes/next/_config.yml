@@ -43,8 +43,8 @@ favicon:
   medium: /images/favicon-32x32.png
   apple_touch_icon: /images/apple-touch-icon.png
   safari_pinned_tab: /images/safari-pinned-tab.svg
-  #android_manifest: /images/manifest.json
-  #ms_browserconfig: /images/browserconfig.xml
+  android_manifest: /images/site.webmanifest
+  ms_browserconfig: /images/browserconfig.xml
 
 # hexo-generator-feed required for rss support. Leave rss as blank to use site's feed link.
 # Set rss to false to disable feed link. Set rss to specific value if you have burned your feed already.
@@ -202,13 +202,18 @@ social_icons:
 
 # Blog rolls
 links_settings:
-  icon: link
-  title: Links
+  icon: gg
+  title: 推荐阅读
   # Available values: block | inline
-  layout: block
+  layout: inline
 
 links:
   #Title: http://example.com
+  掘金: https://juejin.im
+  思否: https://segmentfault.com
+  ES6: http://es6.ruanyifeng.com
+  张鑫旭: https://www.zhangxinxu.com
+  刘小夕: https://juejin.im/user/5c6256596fb9a049bd42c770/posts
 
 # Table Of Contents in the Sidebar
 toc:
@@ -220,7 +225,7 @@ toc:
   # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
   expand_all: false
   # Maximum heading depth of generated toc. You can set it in one post through `toc_max_depth` in Front-matter.
-  max_depth: 6
+  max_depth: 3
 
 # A button to open designated chat widget in sidebar.
 # Firstly, you need enable the chat service you want to activate its sidebar button.
@@ -258,7 +263,7 @@ post_meta:
   created_at: true
   updated_at:
     enable: true
-    another_day: true
+    another_day: false
   categories: true
 
 # Post wordcount display settings
@@ -351,11 +356,11 @@ calendar:
 # Set the text alignment in posts / pages.
 text_align:
   # Available values: start | end | left | right | center | justify | justify-all | match-parent
-  desktop: justify
-  mobile: justify
+  desktop: left
+  mobile: left
 
 # Reduce padding / margin indents on devices with narrow width.
-mobile_layout_economy: false
+mobile_layout_economy: true
 
 # Android Chrome header panel color ($brand-bg / $headband-bg => $black-deep).
 android_chrome_color: '#222'
@@ -367,7 +372,7 @@ safari_rainbow: false
 custom_scrollbar: true
 
 # Custom Logo (Do not support scheme Mist)
-custom_logo: #/uploads/custom-logo.jpg
+custom_logo: #/images/mstile-150x150.png
 
 codeblock:
   # Code Highlight theme
@@ -502,7 +507,7 @@ yandex_site_verification:
 
 # Baidu Webmaster tools verification.
 # See: https://ziyuan.baidu.com/site
-baidu_site_verification:
+baidu_site_verification: DACJqNST0d
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
 baidu_push: false
