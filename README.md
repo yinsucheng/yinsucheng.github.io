@@ -1,4 +1,5 @@
-hexo + next 搭建个人博客
+### hexo + next 搭建个人博客
+
 效果地址：[vason](yinsucheng.github.io)
 
 - 快速开始
