@@ -7,5 +7,6 @@
 ```bash
 npm install
 hexo g
+hexo g -d
 hexo s
 ```
