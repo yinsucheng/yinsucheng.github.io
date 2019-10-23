@@ -1,15 +1,17 @@
 ---
-title: 重温JavaScript字符串方法
+title: 重温 String 类型
 date: 2019-10-22 11:10:11
 tags: [JavaScript]
-categories: [学习笔记]
+categories: [JavaScript]
 ---
+> 基于《JavaScript高级程序设计》和《ECMAScript 6 入门》重新学习 JavaScript 的 String 类型。
+> ☆ 表示 ES6 新增
 
-基于《JavaScript高级程序设计》和《ECMAScript 6 入门》重新学习JavaScript字符串相关方法。此篇文章为学习笔记总结，方便以后复习及查询。
-
-> ☆ 表示 ES6 新增方法
+String 类型用于表示由零或多个 16 位 Unicode 字符组成的字符序列，即字符串。ECMAScript 中的字符串是不可变的。
 
 <!-- more -->
+
+## 简介
 
 ## 继承方法
 
@@ -173,6 +175,18 @@ categories: [学习笔记]
 
 - ☆ matchAll()
   返回一个正则表达式在当前字符串的所有匹配
+
+  ```JavaScript
+  const string = 'test1test2test3';
+  // g 修饰符加不加都可以
+  const regex = /t(e)(st(\d?))/g;
+  for (const match of string.matchAll(regex)) {
+    console.log(match);
+  }
+  // ["test1", "e", "st1", "1", index: 0, input: "test1test2test3"]
+  // ["test2", "e", "st2", "2", index: 5, input: "test1test2test3"]
+  // ["test3", "e", "st3", "3", index: 10, input: "test1test2test3"]
+  ```
 
 - search()
   唯一参数：一个正则表达式 || 一个 RegExp 对象
