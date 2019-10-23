@@ -11,7 +11,68 @@ String 类型用于表示由零或多个 16 位 Unicode 字符组成的字符序
 
 <!-- more -->
 
-## 简介
+## ☆ 字符的 Unicode 表示
+
+ES6 允许采用\uxxxx形式表示一个字符，只限于码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。
+ES6 采用大括号表示法，将码点放入大括号，就能正确解读该字符。
+
+```JavaScript
+"\uD842\uDFB7"
+"\u{20BB7}"
+// "𠮷"
+```
+
+JavaScript 中字符的六种表示方法：
+
+```JavaScript
+'\z' === 'z'  // true
+'\172' === 'z' // true,8进制转义
+'\x7A' === 'z' // true,16进制转义
+'\u007A' === 'z' // true,Unicode 表示法
+'\u{7A}' === 'z' // true,Unicode 大括号表示法
+```
+
+## ☆ 模板字符串
+
+增强版的字符串，用反引号（`）标识。可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
+
+```JavaScript
+let x = 1;
+let y = 2;
+`${x} + ${y} = ${x + y}` // "1 + 2 = 3"
+```
+
+## ☆ 标签模板
+
+模板字符串紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“**标签模板**”功能（tagged template）。
+如果模板字符里面有变量，会将模板字符串先处理成多个参数，再调用函数。
+
+```JavaScript
+let a = 5;
+let b = 10;
+tag`Hello ${ a + b } world ${ a * b }`;
+// 等同于
+tag(['Hello ', ' world ', ''], 15, 50);
+```
+
+过滤 HTML 字符串，防止用户输入恶意内容
+
+```JavaScript
+let message =
+  SaferHTML`<p>${sender} has sent you a message.</p>`;
+
+function SaferHTML(templateData) {
+  let s = templateData[0];
+  for (let i = 1; i < arguments.length; i++) {
+    let arg = String(arguments[i]);
+    s += arg.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+    s += templateData[i];
+  }
+  return s;
+}
+```
 
 ## 继承方法
 
