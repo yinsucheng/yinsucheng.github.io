@@ -2,7 +2,7 @@
 title: 重温 Number 类型
 date: 2019-10-23 11:47:16
 tags: [JavaScript]
-categories: [JavaScript]
+categories: [学习笔记,JavaScript]
 ---
 
 > 基于《JavaScript高级程序设计》和《ECMAScript 6 入门》重新学习 JavaScript 的 Number 类型。
