@@ -78,9 +78,7 @@ function SaferHTML(templateData) {
 
 返回字符串所表示的基本字符串值
 
-- valueOf()
-- toLocalString()
-- toString()
+- valueOf()、toLocalString()、toString()
 
 ## 字符方法
 
@@ -118,9 +116,7 @@ function SaferHTML(templateData) {
   console.log(stringValue.concat("world", "!")); // "hello world!"
   ```
 
-- slice()
-- substring()
-- substr()
+- slice()、substring()、substr()
   返回操作字符串的一个子字符串，接受一个或两个参数。
   参数1：指定子字符串开始位置，参数2：可选，表示子字符串到哪结束。
   > 若只传入一个参数，会截取到字符串末尾。
@@ -141,15 +137,13 @@ function SaferHTML(templateData) {
 
 - ☆ repeat()
   将原字符串重复n次
-- ☆ padStart()
-- ☆ padEnd()
+- ☆ padStart()、padEnd()
   头部补全和尾部补全
   参数1：补全有效长度；参数2：可选，用来补全的字符串，默认为空格
 
 ## 位置方法
 
-- indexOf()
-- lastIndexOf()
+- indexOf()、lastIndexOf()
   在一个字符串中搜索指定子字符串，返回子字符串位置，没有返回 **-1**。
   参数1：为子字符串；参数2：可选，开始搜索位置
 
@@ -166,9 +160,7 @@ function SaferHTML(templateData) {
   console.log(stringValue.lastIndexOf("o", 6)); //4
   ```
 
-- ☆ includes()
-- ☆ startsWith()
-- ☆ endsWith()
+- ☆ includes()、startsWith()、endsWith()
   判断一个字符串是否包含指定子字符串，返回布尔值
   参数1：子字符串；参数2：可选，开始搜索位置
 
@@ -192,11 +184,9 @@ function SaferHTML(templateData) {
 - ☆ trimEnd()
   消除字符串尾部的空格
 
-- toLowerCase()
-- toLocaleLowerCase()
+- toLowerCase()、toLocaleLowerCase()
   将字符串转换为小写
-- toUpperCase()
-- toLocaleUpperCase()
+- toUpperCase()、toLocaleUpperCase()
   将字符串转换为大写
 
   ```JavaScript
