@@ -458,13 +458,13 @@ font:
   # Font settings for headlines (<h1> to <h6>).
   headings:
     external: true
-    family: Noto Serif SC
+    family:
     size:
 
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family: Noto Serif SC
+    family:
 
   # Font settings for <code> and code blocks.
   codes:
