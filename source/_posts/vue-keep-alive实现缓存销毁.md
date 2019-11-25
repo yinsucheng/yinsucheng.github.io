@@ -1,9 +1,14 @@
 ---
-title: vue keep-alive实现动态缓存以及缓存销毁
+title: Vue keep-alive实现动态缓存以及缓存销毁
 date: 2019-11-20 15:15:28
-tags: [vue]
+tags: [Vue]
 categories: [沸点]
 ---
+
+在开发过程中，会根据需求对页面进行缓存。满足某种条件，清除缓存重新加载数据。
+
+<!-- more -->
+
 ## 需求来源及描述
 
 用户登录系统，数据展示页面缓存。系统用户退出登录后，清除页面所有缓存。再次登录，重新加载数据。
@@ -35,7 +40,7 @@ categories: [沸点]
 ```javascript
 // 路由守卫监听路由变化，确定用户是否在进行退出操作
 beforeRouteLeave(to, from, next) {
-    if (from.path === "/profile" &&to.path === "/login") {
+    if (from.path === "/profile" && to.path === "/login") {
         if (
             this.$vnode.parent &&
             this.$vnode.parent.componentInstance &&
@@ -49,5 +54,5 @@ beforeRouteLeave(to, from, next) {
         this.$destroy();
     }
     next();
-},
+}
 ```

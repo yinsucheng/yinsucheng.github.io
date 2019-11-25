@@ -7,7 +7,7 @@ categories: [学习笔记]
 
 > 组件是可以复用的 Vue 实例。 — [Vue 官方文档](https://cn.vuejs.org/v2/guide/components.html)
 
-组件是 Vue 最强大的功能之一，而组件实例的作用域是相互独立的，这意味着不同组件之间的数据相互是不可见的。组件之间关系大致分为父子关系、兄弟关系以及隔代关系。针对不同场景，选择合适的通信方式在实际开发中至关重要。本文是一篇学习笔记，总结了 Vue 组件通信的几种方式，方便自己日后查阅。
+组件是 Vue 最强大的功能之一，而组件实例的作用域是相互独立的，这意味着不同组件之间的数据相互是不可见的。组件之间关系大致分为父子关系、兄弟关系以及隔代关系。针对不同场景，选择合适的通信方式在实际开发中至关重要。
 
 <!-- more -->
 
@@ -122,50 +122,48 @@ export default {
 
 在项目规模不大的情况下，完全可以使用中央事件总线 EventBus 的方式实现组件之间的通信。
 
-1. 创建事件总线
+- 创建事件总线
+  
+  ```vue
+  // eventBus.js
+  import Vue from 'vue'
+  export const EventBus = new Vue()
+  ```
 
-```vue
-// eventBus.js
-import Vue from 'vue'
-export const EventBus = new Vue()
-```
+- 加载
 
-2. 加载
+  ```vue
+  import EventBus from 'eventBus.js';
 
-```vue
-import EventBus from 'eventBus.js'; 
-
-methods： {
-  doSomething() {
-    EventBus.$emit("getTarget", 22);
-    console.log("向getTarget方法传参22");
+  methods： {
+    doSomething() {
+      EventBus.$emit("getTarget", 22);
+      console.log("向getTarget方法传参22");
+    }
   }
-}
-```
+  ```
 
-```vue
-import EventBus from 'eventBus.js';
-create(){
-  EventBus.$on('getTarget', this.getTarget);
-},
-beforeDestroy() {
-  // 组件销毁前需要解绑事件
-  EventBus.$off('getTarget', this.getTarget);
-},
-methods: {
-  getTarget(param) {
-    // todo
+  ```vue
+  import EventBus from 'eventBus.js';
+  create(){
+    EventBus.$on('getTarget', this.getTarget);
+  },
+  beforeDestroy() {
+    // 组件销毁前需要解绑事件
+    EventBus.$off('getTarget', this.getTarget);
+  },
+  methods: {
+    getTarget(param) {
+      // todo
+    }
   }
-}
-```
+  ```
 
 ## vuex
 
 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。 ——[Vuex](https://vuex.vuejs.org/zh/)
 
 ## $attrs
-
-
 
 > 一般组件通信更考虑上面的实现方式。在模块之间通信利用eventBus，然后在模块内部，利用vuex通信，维护数据，会在逻辑上比较清晰。
 

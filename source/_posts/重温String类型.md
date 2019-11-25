@@ -113,7 +113,7 @@ function SaferHTML(templateData) {
 
   ```JavaScript
   const stringValue = "hello ";
-  console.log(stringValue.concat("world", "!")); // "hello world!"
+  stringValue.concat("; // "hello world!"
   ```
 
 - slice()、substring()、substr()
@@ -121,25 +121,36 @@ function SaferHTML(templateData) {
   参数1：指定子字符串开始位置，参数2：可选，表示子字符串到哪结束。
   > 若只传入一个参数，会截取到字符串末尾。
 
+  ```JavaScript
+  const stringValue = "hello world";
+  stringValue.slice(-3); //"rld"
+  stringValue.substring(-3); //"hello world"
+  stringValue.substr(-3); //"rld"
+  stringValue.slice(3, -4); //"lo w"
+  stringValue.substring(3, -4); //"hel"
+  stringValue.substr(3, -4); //""（空字符串）
+  ```
+
   **区别**
   1. slice()、substring() 参数2指定子字符串结束位置；substr() 参数2指定子字符串的字符个数。
   2. slice() 参数为负值，将传入负值与字符的长度相加；substring() 参数为负值，将所有负值转换为0；substr() 参数为负值，第一个参数加上字符串长度，第二个参数转换为0
 
+- ☆ repeat()
+  将原字符串重复n次（n≥0）
+
   ```JavaScript
-  const stringValue = "hello world";
-  console.log(stringValue.slice(-3)); //"rld"
-  console.log(stringValue.substring(-3)); //"hello world"
-  console.log(stringValue.substr(-3)); //"rld"
-  console.log(stringValue.slice(3, -4)); //"lo w"
-  console.log(stringValue.substring(3, -4)); //"hel"
-  console.log(stringValue.substr(3, -4)); //""（空字符串）
+  const stringValue = "hello world ";
+  stringValue.repeat(2); // "hello world hello world "
   ```
 
-- ☆ repeat()
-  将原字符串重复n次
 - ☆ padStart()、padEnd()
   头部补全和尾部补全
   参数1：补全有效长度；参数2：可选，用来补全的字符串，默认为空格
+
+  ```JavaScript
+  const month = '1';
+  month.padStart(2,'0'); // "01"
+  ```
 
 ## 位置方法
 
@@ -147,26 +158,21 @@ function SaferHTML(templateData) {
   在一个字符串中搜索指定子字符串，返回子字符串位置，没有返回 **-1**。
   参数1：为子字符串；参数2：可选，开始搜索位置
 
-  **区别：**
-
-  1. indexOf() 从字符串的开头向后搜索子字符串，lastIndexOf() 从字符串的末尾向前搜索子字符串。
-  2. 如果参数2存在，indexOf() 从参数指定位置向后搜索，lastIndexOf() 从指定位置向前搜索。
-
   ```JavaScript
   const stringValue = "hello world";
-  console.log(stringValue.indexOf("o")); //4
-  console.log(stringValue.lastIndexOf("o")); //7
-  console.log(stringValue.indexOf("o", 6)); //7
-  console.log(stringValue.lastIndexOf("o", 6)); //4
+  stringValue.indexOf("o"); //4
+  stringValue.lastIndexOf("o"); //7
+  stringValue.indexOf("o", 6); //7
+  stringValue.lastIndexOf("o", 6); //4
   ```
+
+  **区别：**
+  1. indexOf() 从字符串的开头向后搜索子字符串，lastIndexOf() 从字符串的末尾向前搜索子字符串。
+  2. 如果参数2存在，indexOf() 从参数指定位置向后搜索，lastIndexOf() 从指定位置向前搜索。
 
 - ☆ includes()、startsWith()、endsWith()
   判断一个字符串是否包含指定子字符串，返回布尔值
   参数1：子字符串；参数2：可选，开始搜索位置
-
-  **区别**
-  1. includes() 是否找到了参数字符串；startsWith() 参数字符串是否在原字符串的头部；endsWith() 参数字符串是否在原字符串的尾部。
-  2. 参数2存在，includes()、startsWith() 从指定位置开始搜索；endsWith() 针对前n个字符。
 
   ```JavaScript
   let s = 'Hello world!';
@@ -174,6 +180,10 @@ function SaferHTML(templateData) {
   s.endsWith('Hello', 5) // true
   s.includes('Hello', 6) // false
   ```
+
+  **区别**
+  1. includes() 是否找到了参数字符串；startsWith() 参数字符串是否在原字符串的头部；endsWith() 参数字符串是否在原字符串的尾部。
+  2. 参数2存在，includes()、startsWith() 从指定位置开始搜索；endsWith() 针对前n个字符。
 
 ## 格式化方法
 
@@ -191,10 +201,10 @@ function SaferHTML(templateData) {
 
   ```JavaScript
   const stringValue = "hello world";
-  console.log(stringValue.toLocaleUpperCase()); //"HELLO WORLD"
-  console.log(stringValue.toUpperCase()); //"HELLO WORLD"
-  console.log(stringValue.toLocaleLowerCase()); //"hello world"
-  console.log(stringValue.toLowerCase()); //"hello world"
+  stringValue.toLocaleUpperCase(); //"HELLO WORLD"
+  stringValue.toUpperCase(); //"HELLO WORLD"
+  stringValue.toLocaleLowerCase(); //"hello world"
+  stringValue.toLowerCase(); //"hello world"
   ```
 
   > 一般来说，在不知道自己的代码将在哪种语言环境中运行的情况下，还是使用针对地区的方法更稳妥一些。
@@ -219,9 +229,9 @@ function SaferHTML(templateData) {
   var pattern = /.at/;
   //与 pattern.exec(text)相同
   var matches = text.match(pattern);
-  console.log(matches.index); //0
-  console.log(matches[0]); //"cat"
-  console.log(pattern.lastIndex); //0
+  matches.index; //0
+  matches[0]; //"cat"
+  pattern.lastIndex; //0
   ```
 
 - ☆ matchAll()
@@ -369,3 +379,4 @@ function SaferHTML(templateData) {
     return output;
   }
   ```
+  
