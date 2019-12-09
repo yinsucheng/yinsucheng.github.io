@@ -15,47 +15,45 @@ categories: [学习笔记]
 
 Vue 中最基本的通信方式，父组件通过 props 向子组件传值。
 
-```vue
-// 子组件
+```html
 <template>
-  <div>
-    <ul>
-      <li v-for="book in books">{{book}}</li>//遍历传递过来的值，然后呈现到页面
-    </ul>
-  </div>
+    <div id="app">
+        <BookList :books="books"></BookList>
+    </div>
 </template>
 <script>
+import BookList from 'Books'
 export default {
-  name: 'BookList',
-  props:{
-    books:{
-      type: Array,
-      required: true
+    name: 'App',
+    data() {
+        return {
+            books: ['JavaScript高程', 'ES6 入门', '锋利的jquery']
+        }
+    },
+    components: {
+        BookList
     }
-  }
 }
 </script>
 ```
 
-```vue
-// 父组件
+**BookList.vue**
+
+```html
 <template>
-  <div id="app">
-    <BookList :books="books"></BookList>
-  </div>
+    <ul>
+        <li v-for="(book, index) in books" :key="index">{{ book }}</li>
+    </ul>
 </template>
 <script>
-import BookList from "./components/Books"
 export default {
-  name: 'App',
-  data(){
-    return{
-      books: ["JavaScript高程", "ES6 入门", "锋利的jquery"]
+    name: 'BookList',
+    props: {
+        books: {
+            type: Array,
+            required: true
+        }
     }
-  },
-  components:{
-    BookList
-  }
 }
 </script>
 ```
@@ -63,57 +61,61 @@ export default {
 ## $emit
 
 子组件通过 \$emit 触发当前实例上的事件，向父组件传值。
-> \$on 可以监听 \$emit 派发的事件，\$off 则用来取消事件监听。
 
-```vue
-// 子组件
+```html
 <template>
-  <header>
-    <h1 @click="changeTitle">{{title}}</h1>
-  </header>
+    <div id="app">
+        <BookList :books="books" @clickBook="showDetail"></BookList>
+    </div>
 </template>
 <script>
+import BookList from 'Books'
 export default {
-  name: 'app-header',
-  data() {
-    return {
-      title:"Vue.js Demo"
+    name: 'App',
+    components: {
+        BookList
+    },
+    data() {
+        return {
+            books: ['JavaScript高程', 'ES6 入门', '锋利的jquery']
+        }
+    },
+    methods: {
+        showDetail (index) {
+            // todo
+        }
     }
-  },
-  methods:{
-    changeTitle() {
-      this.$emit("titleChanged","子向父组件传值");
-    }
-  }
 }
 </script>
 ```
 
-```vue
-// 父组件
+**BookList.vue**
+
+```html
 <template>
-  <div id="app">
-    <app-header @titleChanged="updateTitle" ></app-header>
-    <h2>{{title}}</h2>
-  </div>
+    <ul>
+        <li
+            v-for="(book, index) in books"
+            :key="index"
+            @click="clickBook(index)">
+            {{ book }}
+        </li>
+    </ul>
 </template>
 <script>
-import Header from "./components/Header"
 export default {
-  name: 'App',
-  data(){
-    return{
-      title:"传递的是一个值"
+    name: 'BookList',
+    props: {
+        books: {
+            type: Array,
+            required: true
+        }
+    },
+    methods: {
+        clickBook(index) {
+            this.$emit('clickBook', index)
+        }
     }
-  },
-  methods:{
-    updateTitle(e){
-      this.title = e;
-    }
-  },
-  components:{
-   "app-header":Header,
-  }
 }
 </script>
 ```
@@ -122,9 +124,11 @@ export default {
 
 在项目规模不大的情况下，完全可以使用中央事件总线 EventBus 的方式实现组件之间的通信。
 
+> `$emit`触发当前实例上的事件，`$on`可以监听 `$emit`派发的事件，`$off` 则用来取消事件监听。
+
 - 创建事件总线
   
-  ```vue
+  ```JavaScript
   // eventBus.js
   import Vue from 'vue'
   export const EventBus = new Vue()
@@ -132,30 +136,28 @@ export default {
 
 - 加载
 
-  ```vue
+  ```JavaScript
   import EventBus from 'eventBus.js';
 
   methods： {
-    doSomething() {
-      EventBus.$emit("getTarget", 22);
-      console.log("向getTarget方法传参22");
-    }
+      doSomething() {
+          EventBus.$emit("getTarget", 22);
+          console.log("向getTarget方法传参22");
+      }
   }
   ```
 
-  ```vue
+  ```JavaScript
   import EventBus from 'eventBus.js';
   create(){
-    EventBus.$on('getTarget', this.getTarget);
+      EventBus.$on('getTarget', val => {
+          // todo
+          this.target = val
+      });
   },
   beforeDestroy() {
-    // 组件销毁前需要解绑事件
-    EventBus.$off('getTarget', this.getTarget);
-  },
-  methods: {
-    getTarget(param) {
-      // todo
-    }
+      // 组件销毁前需要解绑事件
+      EventBus.$off('getTarget');
   }
   ```
 
@@ -163,9 +165,23 @@ export default {
 
 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。 ——[Vuex](https://vuex.vuejs.org/zh/)
 
-## $attrs
+## \$attrs/$listeners
 
-> 一般组件通信更考虑上面的实现方式。在模块之间通信利用eventBus，然后在模块内部，利用vuex通信，维护数据，会在逻辑上比较清晰。
+`$attrs` 里存放的是父组件中绑定的非 Props 属性，`$listeners`里存放的是父组件中绑定的非原生事件。
+
+### $attrs
+
+包含了父作用域中不作为 prop 被识别 (且获取) 的特性绑定 (class 和 style 除外)。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 (class 和 style 除外)，并且可以通过 v-bind="$attrs" 传入内部组件——在创建高级别的组件时非常有用([Element](https://element.eleme.cn/#/zh-CN))。
+
+### $listeners
+
+包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。它可以通过 v-on="$listeners" 传入内部组件——在创建更高层次的组件时非常有用。
+
+## provide / inject
+
+## \$parent / $children 与 ref
+
+**一般组件通信更考虑上面的实现方式。在模块之间通信利用eventBus，然后在模块内部，利用vuex通信，维护数据，会在逻辑上比较清晰。**
 
 ## 参考文献
 
